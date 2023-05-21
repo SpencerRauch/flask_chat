@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlaskChat</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/chat.css') }}">
+</head>
+
+<body>
+    <h1>FlaskChat</h1>
+    <div class="chat_areas">
+        <fieldset class="left fs">
+            <legend>Public Rooms</legend>
+        </fieldset>
+        <fieldset class="chat fs">
+            <legend>Current Room: </legend>
+        </fieldset>
+        <div class="right">
+            <fieldset class="joined fs">
+                <legend>Rooms Joined</legend>
+            </fieldset>
+            <fieldset class="invites fs">
+                <legend>Rooms Invites</legend>
+            </fieldset>
+        </div>
+    </div>
+    <form class="add_message">
+        <input type="text" name="message" id="message" placeholder="message">
+        <button class="btn">Send</button>
+    </form>
+    <div class="nav">
+        <p>Logged in as: {{logged_user.username}}</p>
+        <form action="/my_rooms">
+            <button class="btn">My Rooms</button>
+        </form>
+        <form action="/users/logout">
+            <button class="btn">Log Out</button>
+        </form>
+    </div>
+</body>
+
+</html>

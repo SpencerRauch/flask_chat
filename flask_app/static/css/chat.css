@@ -1,0 +1,87 @@
+* {
+    border: 0;
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
+
+h1 {
+    text-align: center;
+    margin: 20px;
+    font-size: 3rem;
+}
+
+.chat_areas {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    height: 60vh;
+    /* background-color: pink; */
+}
+
+.fs {
+    border: solid 2px black;
+}
+
+.fs legend {
+    margin-left: 30px;
+}
+
+
+.left {
+    flex: 1;
+    /* background-color: blue; */
+    margin-left: 30px;
+}
+
+.chat {
+    flex: 2;
+    overflow: auto;
+    /* background-color: orange; */
+}
+
+.right {
+    flex: 1;
+    margin-right: 30px;
+    /* background-color: blueviolet; */
+}
+
+.joined,
+.invites {
+    min-height: 10%;
+    margin-bottom: 20px;
+}
+
+.add_message {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+    gap: 20px;
+}
+
+#message {
+    border: 1px solid black;
+    padding: 5px;
+    width: 40vw;
+}
+
+.nav {
+    display: flex;
+    justify-content: right;
+    gap: 10px;
+    position: absolute;
+    bottom: 20px;
+    right: 0px;
+    width: 100vw;
+    align-items: center;
+    padding-right: 20px;
+}
+
+.nav p{
+    margin-bottom: 0;
+}
+
+.btn{
+    cursor: pointer;
+    padding: 10px 20px;
+}

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Rooms</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/chat.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/my_rooms.css') }}">
+</head>
+<body>
+    <div class="section">
+        <h2>Create Room</h2>
+        <form action="">
+            <label for="name">Room Name</label>
+            <input type="text" name="name" id="name">
+            <input type="checkbox" name="private" id="private">
+            <label for="private">Private</label>
+            <button class="btn">Create</button>
+        </form>
+    </div>
+    <div class="section">
+        <h2>My Private Rooms</h2>
+        <div class="subsection">
+            <form action=""><button class="btn">Delete</button></form>
+            <p>Room Name</p>
+            <p>1 joined</p>
+            <form action="">
+                <label for="invite_id">Invite:</label>
+                <select name="invite_id" id="invite_id">
+                    <option value="test">Test User</option>
+                </select>
+                <button class="btn">Invite</button>
+            </form>
+        </div>
+
+    </div>
+    <div class="section">
+        <h2>My Public Rooms</h2>
+        <div class="subsection">
+            <form action=""><button class="btn">Delete</button></form>
+            <p>Room Name</p>
+            <p>1 joined</p>
+        </div>
+    </div>
+    <div class="nav">
+        <p>Logged in as: {{logged_user.username}}</p>
+        <form action="/dashboard">
+            <button class="btn">Chat</button>
+        </form>
+        <form action="/users/logout">
+            <button class="btn">Log Out</button>
+        </form>
+    </div>
+</body>
+</html>

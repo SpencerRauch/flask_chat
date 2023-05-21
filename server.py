@@ -1,5 +1,5 @@
 from flask_app import app, socketio
-from flask_app.controllers import users
+from flask_app.controllers import users_controller
 
 
 if __name__=='__main__':
