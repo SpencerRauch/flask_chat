@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FlaskChat</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/chat.css') }}">
+    
 </head>
 
 <body>
@@ -17,6 +18,8 @@
         </fieldset>
         <fieldset class="chat fs">
             <legend>Current Room: </legend>
+            <div id="current_chat">
+            </div>
         </fieldset>
         <div class="right">
             <fieldset class="joined fs">
@@ -27,7 +30,7 @@
             </fieldset>
         </div>
     </div>
-    <form class="add_message">
+    <form class="add_message" onsubmit="send(event)">
         <input type="text" name="message" id="message" placeholder="message">
         <button class="btn">Send</button>
     </form>
@@ -40,6 +43,8 @@
             <button class="btn">Log Out</button>
         </form>
     </div>
+    <script src="https://cdn.socket.io/3.1.3/socket.io.min.js" integrity="sha384-cPwlPLvBTa3sKAgddT6krw0cJat7egBga3DJepJyrLl4Q9/5WLra3rrnMcyTyOnh" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/chat.js') }}"></script>
 </body>
 
 </html>

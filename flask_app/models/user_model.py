@@ -32,6 +32,16 @@ class User:
         if results:
             return cls(results[0])
         return False
+
+    @classmethod
+    def get_by_id_dict(cls,data):
+        query = """
+            SELECT id, username FROM users WHERE id = %(id)s;
+        """
+        results = connectToMySQL(DATABASE).query_db(query,data)
+        if results:
+            return results[0]
+        return False
     
     @classmethod
     def get_by_username(cls,data):

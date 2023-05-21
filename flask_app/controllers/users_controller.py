@@ -70,3 +70,9 @@ def my_rooms():
 def logout():
     del session['user_id']
     return redirect('/')
+
+@app.route('/api/users/get_logged_user')
+def get_logged_user():
+    if 'user_id' not in session:
+        return redirect('/')
+    return User.get_by_id_dict({'id': session['user_id']})
