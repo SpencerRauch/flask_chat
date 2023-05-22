@@ -88,7 +88,7 @@ class Room:
                 rooms.append(cls(row))
         return rooms
    
-   #GET one room by name (Not currently used)
+   #GET one room by name (Not currently used, thought I might need it but used ids as the socket room names)
     @classmethod
     def get_by_name(cls,data):
         query = """
