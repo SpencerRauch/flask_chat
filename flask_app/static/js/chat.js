@@ -123,16 +123,20 @@ socket.on("connect", () => {
 //     }
 // })
 
+
+//this listens for new messages being added by the server
+//we should only receive messages for rooms we joined
 socket.on('message_added', (message, roomFor) => {
     console.log('received message from server for room ' + roomFor)
-    if (roomFor == currentRoom) {
+    if (roomFor == currentRoom) { //if we got a message for the room we're currently viewing
+        //we add it to the current chat view, and scroll to the bottom
         currentChat.innerHTML += `<p>${message.username} at ${message.created_at}: ${message.content}</p>`
         currentChat.lastChild.scrollIntoView();
     } else {
+        // if it's for a room we've joined but aren't viewing, we add or increment the badge next to the room
         newSpan = document.querySelector("#newFor" + roomFor)
         console.log(newSpan)
         if (newSpan.innerText == "") {
-            newSpan.style.display = 'static !important';
             newSpan.innerText = '1';
         } else {
             newSpan.innerText++;
@@ -140,6 +144,7 @@ socket.on('message_added', (message, roomFor) => {
     }
 })
 
+//if a user joins the room we're viewing, this displays that in the chat
 socket.on('user_join', (username, room) => {
     console.log(username + " joined " + room)
     if (room == currentRoom) {
@@ -148,6 +153,7 @@ socket.on('user_join', (username, room) => {
     }
 })
 
+//if a user leaves the room we're viewing, this displays that in the chat
 socket.on('user_leave', (username, room) => {
     console.log(username + " left " + room)
     if (room == currentRoom) {
