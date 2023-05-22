@@ -76,7 +76,7 @@ function leaveRoom(room_id) {
 //function for handling new message submissions
 function send(event) {
     event.preventDefault()
-    if (currentRoom == null){ 
+    if (currentRoom == null){  //this prevents a message from being sent if we don't have a current room
         alert('Select a joined room from the right')
         return
     }
