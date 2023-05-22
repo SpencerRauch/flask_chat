@@ -48,7 +48,7 @@ function joinNewRoom(room_id) {
         .then(data => {
             joinedRoomList.innerHTML += `
             <div class="joined_room" id="joined${room_id}">
-            <p onclick="getHistory(${room_id})"><span id="newFor${room_id}" class="unreads"></span> ${data.roomname} </p>
+            <p class="room_select" onclick="getHistory(${room_id})"><span id="newFor${room_id}" class="unreads"></span> ${data.roomname} </p>
             <button onclick="leaveRoom(${room_id})" class="btn">Leave</button>
             </div>
             `

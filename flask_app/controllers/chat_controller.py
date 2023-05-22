@@ -45,7 +45,8 @@ def new_message(data, currentRoom):
     Message.create({
         'content': data['content'],
         'sender_id': session['user_id'],
-        'room_id': currentRoom})
+        'room_id': currentRoom
+        })
     socketio.emit('message_added', (data, currentRoom),to=str(currentRoom))
 
 
