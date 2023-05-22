@@ -52,6 +52,22 @@ h1 {
     margin-bottom: 20px;
 }
 
+.unreads {
+    color: red;
+}
+
+.joined_room, .public_room{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px; 
+    margin-bottom: 20px;
+}
+
+.joined_room p {
+    cursor: pointer;
+}
+
 .add_message {
     display: flex;
     justify-content: center;

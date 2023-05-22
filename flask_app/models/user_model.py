@@ -1,5 +1,6 @@
 from flask_app.config.mysqlconnect import connectToMySQL
 from flask_app import DATABASE
+from flask_app.models import room_model
 from flask import flash
 import re
 ALPHA = re.compile(r"^[a-zA-Z]+$")
@@ -26,22 +27,51 @@ class User:
     @classmethod
     def get_by_id(cls,data):
         query = """
-            SELECT * FROM users WHERE id = %(id)s;
+            SELECT * FROM users 
+            LEFT JOIN users_join_rooms 
+            ON users_join_rooms.user_id = users.id
+            LEFT JOIN rooms
+            ON users_join_rooms.room_id = rooms.id
+            WHERE users.id = %(id)s;
         """
         results = connectToMySQL(DATABASE).query_db(query,data)
         if results:
-            return cls(results[0])
+            user = cls(results[0])
+            user.joined_rooms = []
+            for row in results:
+                if row['rooms.id'] == None:
+                    return user
+                room_data = {
+                    **row,
+                    'id': row['rooms.id'],
+                    'created_at': row['rooms.created_at'],
+                    'updated_at': row['rooms.updated_at']
+                }
+                user.joined_rooms.append(room_model.Room(room_data))
+            return user
         return False
 
     @classmethod
     def get_by_id_dict(cls,data):
         query = """
-            SELECT id, username FROM users WHERE id = %(id)s;
+            SELECT * FROM users 
+            LEFT JOIN users_join_rooms 
+            ON users_join_rooms.user_id = users.id
+            WHERE id = %(id)s;
         """
         results = connectToMySQL(DATABASE).query_db(query,data)
         if results:
-            return results[0]
+            user = {
+                'username': results[0]['username'],
+                'id': results[0]['id']
+            }
+            user['joined_room_ids'] = []
+            for row in results:
+                user['joined_room_ids'].append(row['room_id'])
+            return user
         return False
+    
+
     
     @classmethod
     def get_by_username(cls,data):

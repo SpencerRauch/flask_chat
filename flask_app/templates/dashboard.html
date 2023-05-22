@@ -15,15 +15,27 @@
     <div class="chat_areas">
         <fieldset class="left fs">
             <legend>Public Rooms</legend>
+            {% for room in public_rooms %}
+                <div class="public_room">
+                    <p>{{room.name}}</p>
+                    <button onclick="joinNewRoom({{room.id}})" class="btn">Join</button>
+                </div>
+            {% endfor %}
         </fieldset>
         <fieldset class="chat fs">
-            <legend>Current Room: </legend>
+            <legend>Current Room: <span id="current_room"></span></legend>
             <div id="current_chat">
             </div>
         </fieldset>
         <div class="right">
-            <fieldset class="joined fs">
+            <fieldset class="joined fs" id="rooms_joined">
                 <legend>Rooms Joined</legend>
+                {% for room in logged_user.joined_rooms  %}
+                    <div class="joined_room" id="joined{{room.id}}">
+                        <p onclick="getHistory({{room.id}})"><span id="newFor{{room.id}}" class="unreads"></span> {{room.name}} </p>
+                        <button onclick="leaveRoom({{room.id}})" class="btn">Leave</button>
+                    </div>
+                {% endfor %}
             </fieldset>
             <fieldset class="invites fs">
                 <legend>Rooms Invites</legend>

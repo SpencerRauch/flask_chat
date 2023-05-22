@@ -47,17 +47,6 @@ def log_user():
     session['user_id'] = potential_user.id
     return redirect('/dashboard')
 
-    
-
-@app.route('/dashboard')
-def dashboard():
-    if 'user_id' not in session:
-        return redirect('/')
-    data = {
-        'id': session['user_id']
-    }
-    logged_user = User.get_by_id(data)
-    return render_template('dashboard.html', logged_user=logged_user)
 
 @app.route('/my_rooms')
 def my_rooms():
