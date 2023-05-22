@@ -110,7 +110,7 @@ function renderChat(chat_log) {
         chatHTML += `<p>${message.username} at ${message.created_at}: ${message.content}</p>`
     }
     currentChat.innerHTML = chatHTML
-    currentChat.lastChild.scrollIntoView();
+    currentChat.lastChild.scrollIntoView(); //this line scrolls our chat to the bottom
 }
 
 
