@@ -104,6 +104,7 @@ function getHistory(room_id) {
 //helper function to render chat history, gets called in getHistory
 function renderChat(chat_log) {
     currentChat.innerHTML = "<p>Loading...</p>"
+    //updating the DOM is expensive, so it's better to generate all the HTML and then set it only once
     let chatHTML = ""
     for (let message of chat_log) {
         chatHTML += `<p>${message.username} at ${message.created_at}: ${message.content}</p>`
