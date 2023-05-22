@@ -15,6 +15,7 @@ GLOBAL_CHAT = [
 @socketio.on('connect')
 def test_connect(auth):
     print('printed',auth)
+    # left over from early testing, clients no longer listening for this event
     emit('chat_history', {'data': GLOBAL_CHAT})
 
 #Join room event

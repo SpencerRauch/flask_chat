@@ -33,7 +33,7 @@
                 <legend>Rooms Joined</legend>
                 {% for room in logged_user.joined_rooms  %}
                     <div class="joined_room" id="joined{{room.id}}">
-                        <p onclick="getHistory({{room.id}})"><span id="newFor{{room.id}}" class="unreads"></span> {{room.name}} </p>
+                        <p class="room_select" onclick="getHistory({{room.id}})"><span id="newFor{{room.id}}" class="unreads"></span> {{room.name}} </p>
                         <button onclick="leaveRoom({{room.id}})" class="btn">Leave</button>
                     </div>
                 {% endfor %}

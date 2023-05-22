@@ -115,6 +115,7 @@ socket.on("connect", () => {
 });
 
 
+// old code to get my hardcoded global chat
 // socket.on('chat_history', (response) => {
 //     console.log(response)
 //     for (let message of response.data) {
