@@ -51,6 +51,7 @@ class User:
             return user
         return False
 
+    #This version doesn't instatiate, for use with our api calls
     @classmethod
     def get_by_id_dict(cls,data):
         query = """

@@ -11,12 +11,13 @@ GLOBAL_CHAT = [
     {'username':'System', 'content':'Welcome', 'created_at': 'placeholder date time'}
 ]
 
+#Connect is a special event that happens when a client connects
 @socketio.on('connect')
 def test_connect(auth):
     print('printed',auth)
     emit('chat_history', {'data': GLOBAL_CHAT})
 
-
+#Join room event
 @socketio.on('join')
 def on_join(data):
     print('join called')
@@ -25,6 +26,7 @@ def on_join(data):
     join_room(str(room))
     socketio.emit('user_join',(username,room),to=str(room))
 
+#Leave room event
 @socketio.on('leave')
 def on_leave(data):
     print('leave called for', data)
@@ -33,6 +35,7 @@ def on_leave(data):
     leave_room(room)
     socketio.emit('user_leave',(username,room),to=str(room))
 
+#Receive new message
 @socketio.on('new_message')
 def new_message(data, currentRoom):
     # GLOBAL_CHAT.append(data);
@@ -42,7 +45,6 @@ def new_message(data, currentRoom):
         'content': data['content'],
         'sender_id': session['user_id'],
         'room_id': currentRoom})
-    
     socketio.emit('message_added', (data, currentRoom),to=str(currentRoom))
 
 

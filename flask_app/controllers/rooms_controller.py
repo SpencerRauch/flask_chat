@@ -6,17 +6,7 @@ from flask_app.models.room_model import Room
 from flask_app.models.message_model import Message
 
 
-@app.route('/dashboard')
-def dashboard():
-    if 'user_id' not in session:
-        return redirect('/')
-    data = {
-        'id': session['user_id']
-    }
-    logged_user = User.get_by_id(data)
-    public_rooms = Room.get_public()
-    return render_template('dashboard.html', logged_user=logged_user, public_rooms=public_rooms)
-
+# API ROUTES
 @app.route('/api/rooms/<int:id>/history')
 def get_room_history(id):
     data = {
@@ -43,6 +33,19 @@ def join_new_room(id):
     roomname = Room.get_by_id({'id':id}).name
     return {'message':'success', 'roomname': roomname}
 
+#Display Dashboard
+@app.route('/dashboard')
+def dashboard():
+    if 'user_id' not in session:
+        return redirect('/')
+    data = {
+        'id': session['user_id']
+    }
+    logged_user = User.get_by_id(data)
+    public_rooms = Room.get_public()
+    return render_template('dashboard.html', logged_user=logged_user, public_rooms=public_rooms)
+
+#Create new room
 @app.route('/rooms/create', methods=['POST'])
 def create_room():
     if 'user_id' not in session:
@@ -61,6 +64,7 @@ def create_room():
     })
     return redirect('/my_rooms')
     
+#Delete a room
 @app.route('/rooms/<int:id>/delete', methods=['POST'])
 def delete_room(id):
     if 'user_id' not in session:

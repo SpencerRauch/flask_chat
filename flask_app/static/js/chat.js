@@ -1,13 +1,17 @@
 console.log('hello')
+// these variables will keep track of our user data and the current room we're watching
 let user = null
 let currentRoom = null
 
-
+//brings in socket io from cdn linked on template 
 const socket = io();
+
+//targetting important elements we'll use
 const currentChat = document.querySelector('#current_chat')
 const roomDisplay = document.querySelector('#current_room')
 const joinedRoomList = document.querySelector('#rooms_joined')
 
+//async function to retrieve the logged in user's info and join them to their list of joined rooms
 async function getUser() {
     let response = await fetch('/api/users/get_logged_user')
     let user_data = await response.json()
@@ -17,11 +21,9 @@ async function getUser() {
         console.log('joining ', room_id)
         joinRoom(room_id)
     }
-
-
 }
 
-
+//function for joining a previously joined room (room in our room list)
 function joinRoom(room_id) {
     socket.emit('join', {
         username: user.username,
@@ -29,6 +31,7 @@ function joinRoom(room_id) {
     })
 }
 
+// function for joining a new room (adds it to our room list)
 function joinNewRoom(room_id) {
     if (user.joined_room_ids.includes(room_id)){
         alert('Already joined')
@@ -49,6 +52,7 @@ function joinNewRoom(room_id) {
         .catch(err => console.log(err))
 }
 
+// function for leaving a room
 function leaveRoom(room_id) {
     socket.emit('leave', {
         username: user.username,
@@ -65,6 +69,7 @@ function leaveRoom(room_id) {
         .catch(err => console.log(err))
 }
 
+//function for handling new message submissions
 function send(event) {
     event.preventDefault()
     if (currentRoom == null){ 
@@ -77,6 +82,7 @@ function send(event) {
     event.target.message.value = "";
 }
 
+//function for retrieving a room's history from the db and displaying it to page
 function getHistory(room_id) {
     currentRoom = room_id
     newSpan = document.querySelector("#newFor" + room_id)
@@ -91,6 +97,7 @@ function getHistory(room_id) {
         .catch(err => console.log('get history error', err))
 }
 
+//helper function to render chat history, gets called in getHistory
 function renderChat(chat_log) {
     currentChat.innerHTML = "<p>Loading...</p>"
     let chatHTML = ""
@@ -101,6 +108,7 @@ function renderChat(chat_log) {
     currentChat.lastChild.scrollIntoView();
 }
 
+//connect event happens when client connects to server, we use it as a time to get our user data 
 socket.on("connect", () => {
     console.log(socket.id); // x8WIv7-mJelg7on_ALbx
     getUser()

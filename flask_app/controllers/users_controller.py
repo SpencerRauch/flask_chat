@@ -64,6 +64,7 @@ def logout():
     del session['user_id']
     return redirect('/')
 
+#API route for retrieving logged in user's info
 @app.route('/api/users/get_logged_user')
 def get_logged_user():
     if 'user_id' not in session:
