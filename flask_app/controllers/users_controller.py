@@ -2,6 +2,7 @@ from flask_app import app
 from flask import render_template, redirect, request, flash, session
 from flask_bcrypt import Bcrypt
 from flask_app.models.user_model import User
+from flask_app.models.room_model import Room
 
 bcrypt = Bcrypt(app)
 
@@ -47,13 +48,16 @@ def log_user():
     session['user_id'] = potential_user.id
     return redirect('/dashboard')
 
-
 @app.route('/my_rooms')
 def my_rooms():
     if 'user_id' not in session:
         return redirect('/')
-    logged_user = User.get_by_id({'id':session['user_id']})
-    return render_template('my_rooms.html', logged_user=logged_user)
+    user_data = {
+        'id':session['user_id']
+    }
+    logged_user = User.get_by_id(user_data)
+    public = Room.public_get_created_by_user_id(user_data)
+    return render_template('my_rooms.html', logged_user=logged_user, public=public)
 
 @app.route('/users/logout')
 def logout():

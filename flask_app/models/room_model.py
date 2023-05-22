@@ -50,6 +50,38 @@ class Room:
         if results:
             return cls(results[0])
         return False
+    
+    @classmethod
+    def public_get_created_by_user_id(cls,data):
+        query = """
+            SELECT *, COUNT(users_join_rooms.user_id) as joined FROM rooms 
+            JOIN users ON users.id = rooms.creator_id
+            LEFT JOIN users_join_rooms ON rooms.id = users_join_rooms.room_id 
+            WHERE users.id = %(id)s AND rooms.private = 0
+            GROUP BY rooms.id;
+        """
+        results = connectToMySQL(DATABASE).query_db(query,data)
+        rooms = []
+        if results:
+            for row in results:
+                room = cls(row)
+                room.joined = row['joined']
+                rooms.append(room)
+        return rooms
+    
+    @classmethod
+    def private_get_created_by_user_id(cls,data):
+        query = """
+            SELECT * FROM rooms 
+            JOIN users ON users.id = rooms.creator_id
+            WHERE users.id = %(id)s AND rooms.private = 1;
+        """
+        results = connectToMySQL(DATABASE).query_db(query,data)
+        rooms = []
+        if results:
+            for row in results:
+                rooms.append(cls(row))
+        return rooms
    
     @classmethod
     def get_by_name(cls,data):
@@ -75,7 +107,7 @@ class Room:
         """
         results = connectToMySQL(DATABASE).query_db(query,data)
         if results[0]['content'] == None:
-            return [{'name':results[0]['name'],'content':'Not found','username':'nothing','created_at':'this room'}]
+            return [{'name':results[0]['name'],'content':'Start us off!','username':'nothing','created_at':'this time'}]
         return results
 
     @classmethod

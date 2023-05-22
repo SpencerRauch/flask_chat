@@ -18,6 +18,7 @@ async function getUser() {
         joinRoom(room_id)
     }
 
+
 }
 
 
@@ -29,6 +30,11 @@ function joinRoom(room_id) {
 }
 
 function joinNewRoom(room_id) {
+    if (user.joined_room_ids.includes(room_id)){
+        alert('Already joined')
+        return
+    }
+    user.joined_room_ids.push(room_id)
     joinRoom(room_id)
     fetch('/api/rooms/' + room_id + '/join')
         .then(res => res.json())
@@ -48,17 +54,23 @@ function leaveRoom(room_id) {
         username: user.username,
         room: "" + room_id
     })
+    user.joined_room_ids = user.joined_room_ids.filter(e => e != room_id)
     fetch('/api/rooms/' + room_id + '/leave')
         .then(res => res.json())
         .then(data => {
             console.log(data)
             document.querySelector("#joined" + room_id).remove()
+
         })
         .catch(err => console.log(err))
 }
 
 function send(event) {
     event.preventDefault()
+    if (currentRoom == null){ 
+        alert('Select a joined room from the right')
+        return
+    }
     let message_content = event.target.message.value
     let message = { 'username': user.username, 'content': message_content, 'created_at': new Date().toLocaleString('en-US') }
     socket.emit('new_message', message, currentRoom)

@@ -81,3 +81,22 @@ def join_new_room(id):
     Room.join_room(data)
     roomname = Room.get_by_id({'id':id}).name
     return {'message':'success', 'roomname': roomname}
+
+@app.route('/rooms/create', methods=['POST'])
+def create_room():
+    if 'user_id' not in session:
+        return redirect('/')
+    data ={
+        'creator_id': session['user_id'],
+        'name': request.form['name']
+    }
+    if 'private' in request.form:
+        new_room = Room.create_private(data)
+    else:
+        new_room = Room.create(data)
+    Room.join_room({
+        'room_id': new_room,
+        'user_id': session['user_id']     
+    })
+    return redirect('/my_rooms')
+    
