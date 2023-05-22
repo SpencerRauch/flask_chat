@@ -100,3 +100,15 @@ def create_room():
     })
     return redirect('/my_rooms')
     
+@app.route('/rooms/<int:id>/delete', methods=['POST'])
+def delete_room(id):
+    if 'user_id' not in session:
+        return redirect('/')
+    room = Room.get_by_id({'id':id})
+    if room.creator_id != session['user_id']:
+        session.clear()
+        flash('Logged out for being a jerk', reg)
+        return redirect('/')
+    Room.delete_room({'id':id})
+    return redirect('/my_rooms')
+        

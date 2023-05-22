@@ -127,3 +127,10 @@ class Room:
             VALUES (%(room_id)s, %(user_id)s);
         """
         return connectToMySQL(DATABASE).query_db(query,data)
+    
+    @classmethod
+    def delete_room(cls, data):
+        query = """
+        DELETE FROM rooms WHERE id = %(id)s;
+        """
+        return connectToMySQL(DATABASE).query_db(query,data)
