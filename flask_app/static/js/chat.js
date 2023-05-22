@@ -1,4 +1,4 @@
-console.log('hello')
+/*                        Variable Declarations                            */
 // these variables will keep track of our user data and the current room we're watching
 let user = null
 let currentRoom = null
@@ -11,7 +11,11 @@ const currentChat = document.querySelector('#current_chat')
 const roomDisplay = document.querySelector('#current_room')
 const joinedRoomList = document.querySelector('#rooms_joined')
 
+
+/*                        Function Declarations                            */
+
 //async function to retrieve the logged in user's info and join them to their list of joined rooms
+//we call this function on connect
 async function getUser() {
     let response = await fetch('/api/users/get_logged_user')
     let user_data = await response.json()
@@ -107,6 +111,9 @@ function renderChat(chat_log) {
     currentChat.innerHTML = chatHTML
     currentChat.lastChild.scrollIntoView();
 }
+
+
+/*                        Socket Events                            */
 
 //connect event happens when client connects to server, we use it as a time to get our user data 
 socket.on("connect", () => {
