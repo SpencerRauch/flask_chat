@@ -72,7 +72,7 @@ def delete_room(id):
     room = Room.get_by_id({'id':id})
     if room.creator_id != session['user_id']:
         session.clear()
-        flash('Logged out for being a jerk', reg)
+        flash('Logged out for being a jerk', 'reg')
         return redirect('/')
     Room.delete_room({'id':id})
     return redirect('/my_rooms')
